@@ -1,0 +1,40 @@
+params:
+  num_bins: 5
+  num_encoders: 3
+  base_num_channels: 32
+  num_residual_blocks: 2
+  height: 128
+  width: 128
+  skip_type: sum
+  use_upsample_conv: true
+  recurrent_block: convlstm
+  kernel_size: 3
+
+model:
+  adapter_ckpt: ./logs/ae2vid_adapter/adapter_best.pth.tar
+  e2vid_ckpt: ./pretrained/v2v_weight.pth
+
+train:
+  save_dir: ./logs/ae2vid/
+  dataroot: /path/to/ApEvid_dataset
+  num_iter: 20
+  num_workers: 8
+  batch_size: 4
+  num_epochs: 10
+  weight_decay: 0.0
+  grad_clip: 1.0
+  save_freq: 5
+  val_freq: 5
+  grad_log_every: 50
+  freeze_e2vid: false
+
+  lr: 1e-5
+  scheduler:
+    type: CosineAnnealingLR
+    T_max: 10
+    eta_min: 1e-7
+  adapter_weight: 1.0
+  l1_weight: 1.0
+  lpips_weight: 1.0
+  tc_weight: 1.0
+  tc_alpha: 50.0

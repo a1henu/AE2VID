@@ -1,0 +1,11 @@
+checkpoints:
+  ae2vid: ./pretrained/biape2vid_best.pth.tar
+  v2v_e2vid: ./pretrained/v2v_weight.pth
+  swinir_idn: ./pretrained/swinir_idn.pth
+  rife: ./pretrained/flownet.pkl
+
+datasets:
+  apevid_train: /path/to/ApEvid_dataset
+  evaid_root: /path/to/EvAid
+  hqf_h5: /path/to/HQF_h5/boxes.h5
+  real_sequence: /path/to/AMED/sequence_0
