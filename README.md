@@ -28,7 +28,7 @@ uv sync
 
 ## Checkpoints
 
-Large checkpoint files are not tracked by git. Place external checkpoints under `pretrained/` or pass their paths with command-line arguments.
+Please place checkpoints under `pretrained/` or pass their paths with command-line arguments.
 
 You can download checkpoints from the [Google Drive](https://drive.google.com/drive/folders/1uJi47bzALBsfb-Szwm_YuebFhuGnmAa3?usp=share_link):
 
