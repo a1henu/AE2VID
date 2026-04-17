@@ -30,7 +30,7 @@ uv sync
 
 Large checkpoint files are not tracked by git. Place external checkpoints under `pretrained/` or pass their paths with command-line arguments.
 
-Expected runtime checkpoints:
+Expected checkpoints, you can download them from the [Google Drive](https://drive.google.com/drive/folders/1uJi47bzALBsfb-Szwm_YuebFhuGnmAa3?usp=share_link):
 
 ```text
 pretrained/biape2vid_best.pth.tar
@@ -39,7 +39,14 @@ pretrained/swinir_idn.pth
 pretrained/flownet.pkl
 ```
 
-## Training
+## Datasets
+
+Training datasets are available at [Google Drive](https://drive.google.com/drive/folders/1-byJS0VPAWF0wF1o4Vmh3w_NcSS14TGV?usp=share_link).
+
+AMED are available at [Google Drive](https://drive.google.com/drive/folders/1P2yCVDu1kIyYgIAQ8gaXHuHpEjE6hAoy?usp=share_link).
+
+
+## Training 
 
 Stage 1 trains the aperture/HSG adapter while the V2V-E2VID branch is frozen:
 
