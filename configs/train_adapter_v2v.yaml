@@ -1,5 +1,5 @@
 params:
-  ckpt_path: ./pretrained/v2v_weight.pth
+  e2vid_ckpt_path: ./pretrained/v2v_weight.pth
   num_bins: 5
   num_encoders: 3
   base_num_channels: 32

@@ -29,6 +29,9 @@ def _as_float(x, name=""):
             raise ValueError(f"Config field {name} should be numeric, got: {x!r}")
     raise ValueError(f"Config field {name} should be numeric, got type {type(x)}")
 
+def _scalar_value(x):
+    return float(x.item()) if hasattr(x, "item") else float(x)
+
 def save_checkpoint(save_dir, epoch, model, optimizer, tag=None, name=None):
     os.makedirs(save_dir, exist_ok=True)
     if name is None:
@@ -144,11 +147,11 @@ def train_one_epoch(
         loss.backward()
         optimizer.step()
         
-        batch_avg_total = losses['total'].item() / T
-        batch_avg_adapter = losses['adapter'].item() / 2
-        batch_avg_l1    = losses['l1'].item()    / T
-        batch_avg_lpips = losses['lpips'].item() / T
-        batch_avg_tc    = losses['tc'].item()    / (T - 2)
+        batch_avg_total = _scalar_value(losses['total']) / T
+        batch_avg_adapter = _scalar_value(losses['adapter']) / 2
+        batch_avg_l1    = _scalar_value(losses['l1'])    / T
+        batch_avg_lpips = _scalar_value(losses['lpips']) / T
+        batch_avg_tc    = _scalar_value(losses['tc'])    / max(1, T - 2)
         pbar.set_postfix({
             "Total Loss": f"{batch_avg_total:.6f}",
             "Adapter Loss": f"{batch_avg_adapter:.6f}",
@@ -206,11 +209,11 @@ def validate_one_epoch(
                 loss_weights
             )
 
-            epoch_loss['total']   += losses['total'].item() / T
-            epoch_loss['adapter'] += losses['adapter'].item() / 2
-            epoch_loss['l1']      += losses['l1'].item()    / T
-            epoch_loss['lpips']   += losses['lpips'].item() / T
-            epoch_loss['tc']      += losses['tc'].item()    / (T - 2)
+            epoch_loss['total']   += _scalar_value(losses['total']) / T
+            epoch_loss['adapter'] += _scalar_value(losses['adapter']) / 2
+            epoch_loss['l1']      += _scalar_value(losses['l1'])    / T
+            epoch_loss['lpips']   += _scalar_value(losses['lpips']) / T
+            epoch_loss['tc']      += _scalar_value(losses['tc'])    / max(1, T - 2)
 
     epoch_avg = {k: v / num_batches for k, v in epoch_loss.items()}
     if writer is not None:

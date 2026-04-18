@@ -39,6 +39,9 @@ def _grad_norm(params):
     stacked = torch.stack(norms)
     return float(stacked.norm(2).item())
 
+def _scalar_value(x):
+    return float(x.item()) if hasattr(x, "item") else float(x)
+
 def _append_grad_csv(save_dir, epoch_idx, batch_idx, model_name, named_params):
     os.makedirs(save_dir, exist_ok=True)
     path = os.path.join(save_dir, "grad_log.csv")
@@ -176,10 +179,10 @@ def train_one_epoch(
         optimizer.step()
 
         # 按时间步取均值，作为“当前 batch 的平均 step 损失”
-        batch_avg_total = batch_loss["total"].item() / T
-        batch_avg_l1    = batch_loss["l1"].item()    / T
-        batch_avg_lpips = batch_loss["lpips"].item() / T
-        batch_avg_tc    = batch_loss["tc"].item()    / T
+        batch_avg_total = _scalar_value(batch_loss["total"]) / T
+        batch_avg_l1    = _scalar_value(batch_loss["l1"])    / T
+        batch_avg_lpips = _scalar_value(batch_loss["lpips"]) / T
+        batch_avg_tc    = _scalar_value(batch_loss["tc"])    / T
 
         # tqdm 显示
         pbar.set_postfix({
